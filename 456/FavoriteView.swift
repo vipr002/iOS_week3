@@ -11,6 +11,7 @@ struct FavoriteView: View {
     
     @Binding var contacts: [Contact]
     var removeFromContacts: (Contact) -> Void // Funksjon for å flytte kontakt tilbake til kontaktene
+    var searchedText: String
     
     var body: some View {
 

@@ -57,19 +57,4 @@ struct ContactDetailsView: View {
         }
     }
 }
-
-    
-    /*
-     Button(action: {
-     print("Phone button tapped")
-     },
-     label: {
-     Image(systemName: "phone.fill")
-     Text("Ring")
-     })
-     .padding(10)
-     .background(Color.green)
-     .foregroundColor(.white)
-     .cornerRadius(15)
-     */
     

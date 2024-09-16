@@ -12,7 +12,7 @@ struct HomeView: View {
     
     @State var contacts: [Contact] = mocks // Hovedlisten for kontakter
     @State private var selectedContact: Contact?
-    @State var searchedText: String = ""
+    @State private var searchedText: String = ""
     
     var body: some View {
         
@@ -28,7 +28,7 @@ struct HomeView: View {
                             .font(.title)
                             .padding(.leading)
                         
-                        FavoriteView(contacts: $contacts, removeFromContacts: moveToContacts)
+                        FavoriteView(contacts: $contacts, removeFromContacts: moveToContacts, searchedText: searchedText)
                     }
                     
                     // Kontaktseksjon
@@ -38,7 +38,7 @@ struct HomeView: View {
                             .padding(.leading)
                         
                         
-                        ContactView(contacts: $contacts, removeFromFavorites: moveToFavorites)
+                        ContactView(contacts: $contacts, removeFromFavorites: moveToFavorites, searchedText: searchedText)
                     }
                 }
                 
@@ -46,6 +46,15 @@ struct HomeView: View {
             }
         }
         .searchable(text: $searchedText)
+    }
+    
+    
+    // Søkefunksjon
+    func filteredContacts() -> [Contact] {
+        guard !searchedText.isEmpty else { return contacts }
+        return contacts.filter { contact in
+            contact.name.lowercased().contains(searchedText.lowercased())
+        }
     }
     
     // ---- * Håndtering av favoritt og ikke-favoritt kontakter * ----
@@ -73,8 +82,6 @@ struct HomeView: View {
             contacts[index].isFavorite = false
         }
     }
-    
-
 }
 
 #Preview {

@@ -8,6 +8,7 @@ struct ContactView: View {
     
     @Binding var contacts: [Contact] // Binding til contacts fra HomeView
     var removeFromFavorites: (Contact) -> Void // Funksjon for å flytte kontakt til favoritter
+    var searchedText: String
     
     var body: some View {
             
@@ -25,6 +26,6 @@ struct ContactView: View {
                 }
             }
 
-        .frame(maxWidth: .infinity) // Sikrer at ContactView tar opp hele bredden
+        .frame(maxWidth: .infinity) // ContactView tar opp hele bredden
     }
 }

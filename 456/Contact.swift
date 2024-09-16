@@ -14,7 +14,7 @@ struct Contact: Identifiable {
     let imageName: String
     var isFavorite: Bool = false
     var isArchived: Bool = false
-    var archivedAt: Date? = nil // Dato og klokkeslett når kontakten ble arkivert
+    var archivedAt: Date? = nil 
 }
 
 
