@@ -29,7 +29,7 @@ struct ContentView: View {
                     Label("Contacts", systemImage: "person.fill")
                 }
                 
-                SettingsView()
+                SettingsView(contacts: $contacts)
                     .tabItem {
                         Label("Settings", systemImage: "gearshape.fill")
                     }
