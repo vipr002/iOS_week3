@@ -10,7 +10,9 @@ import SwiftUI
 struct ContactCell: View {
     
     @State private var showSheet = false
-    @Binding var contact: Contact // Bruker binding for å kunne oppdatere kontaktens egenskaper
+    @Binding var contacts: [Contact] // Hele contactlist
+    @Binding var contact: Contact     // Spesifikk contact
+    @Binding var archivedContacts: [ArchivedContact]
     
     var body: some View {
         
@@ -42,7 +44,7 @@ struct ContactCell: View {
         }
         .sheet(isPresented: $showSheet) {
             // Innholdet i sheet
-            ContactDetailCell(contact: $contact)
+            ContactDetailCell(contact: $contact, contacts: $contacts, archivedContacts: $archivedContacts)
                 .presentationDetents([.fraction(0.2)])
                 
         }

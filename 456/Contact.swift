@@ -31,4 +31,3 @@ let dateFormatter: DateFormatter = {
     formatter.dateFormat = "yyyy-MM-dd HH:mm"
     return formatter
 }()
-

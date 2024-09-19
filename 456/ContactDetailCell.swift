@@ -10,12 +10,15 @@ import SwiftUI
 struct ContactDetailCell: View {
     
     @Binding var contact: Contact
+    @Binding var contacts: [Contact]
+    @Binding var archivedContacts: [ArchivedContact]
     
     var body: some View {
         
         VStack {
             
             HStack {
+                
                 Image(contact.imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -41,14 +44,17 @@ struct ContactDetailCell: View {
             // Hvis kontakten er arkivert, vis dato
             if contact.isArchived {
                 if let archivedAt = contact.archivedAt {
-                    Text("Archived at: \(formatDate(archivedAt))")
+                    Text("Archived at: \(ArchivedList.formatDate(archivedAt))")
                         .font(.footnote)
                 }
             }
 
+
             HStack {
                 
                 Spacer()
+                
+                // --- Call button
                 
                 Button(action: {
                     print("Phone button tapped")
@@ -64,6 +70,8 @@ struct ContactDetailCell: View {
                 
                 Spacer()
                 
+                // --- Message button
+                
                 Button(action: {
                     print("Message button tapped")
                 },
@@ -78,13 +86,15 @@ struct ContactDetailCell: View {
                 
                 Spacer()
                                 
+                // --- Archive button
+                
                 Button(action: {
-                    print("Archive button tapped")
-                },
-                       label: {
-                    Image(systemName: "person.fill")
-                    Text("Arhive")
-                })
+                    archiveContact(contact: &contact) // Arkiver contact
+                    archive(contact) // Fjern fra contacts og legg til i arkiv
+                }) {
+                    Text("Archive")
+                        .foregroundColor(.blue)
+                }
                 .padding(8)
                 .background(Color.gray)
                 .foregroundColor(.white)
@@ -104,15 +114,14 @@ struct ContactDetailCell: View {
         ) */
     }
     
-    func formatDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter.string(from: date)
+    // ---- Arkiver contact
+    private func archive(_ contact: Contact) {
+        let archivedContact = ArchivedContact(contact: contact, archivedAt: Date())
+        archivedContacts.append(archivedContact)
+        
+        // ---- Fjern fra contacts
+        if let foundIndex = contacts.firstIndex(where: { $0.id == contact.id }) {
+            contacts.remove(at: foundIndex)
+        }
     }
-    
-}
-
-#Preview {
-    ContactDetailCell(contact: .constant(Contact(name: "John Doe", imageName: "person1", isFavorite: false, isArchived: true, archivedAt: Date())))
 }

@@ -10,20 +10,25 @@ import SwiftUI
 struct FavoriteView: View {
     
     @Binding var contacts: [Contact]
-    var removeFromContacts: (Contact) -> Void // Funksjon for å flytte kontakt tilbake til kontaktene
+    @Binding var archivedContacts: [ArchivedContact]
+    var removeFromContacts: (Contact) -> Void
     var searchedText: String
     
     var body: some View {
-
         ScrollView(.vertical) {
-            
             VStack {
                 
-                ForEach(contacts.filter { $0.isFavorite }) { contact in
-                    ContactCell(contact: $contacts[contacts.firstIndex(where: { $0.id == contact.id })!])
-                        .onTapGesture {
-                            removeFromContacts(contact) // Fjern fra favoritter og flytt tilbake til kontakter
-                        }
+                // Filtreringslogikk for favoritter direkte inn i favoriteview
+                ForEach(filteredFavoriteContacts, id: \.id) { contact in
+                    if let contactIndex = contacts.firstIndex(where: { $0.id == contact.id }) {
+                       
+                        
+                        // Sende kontakter + spesifikk kontakt som binding til contactcell
+                        ContactCell(contacts: $contacts, contact: $contacts[contactIndex], archivedContacts: $archivedContacts)
+                            .onTapGesture {
+                                removeFromContacts(contact)
+                            }
+                    }
                 }
                 .padding(.horizontal)
             }
@@ -35,4 +40,56 @@ struct FavoriteView: View {
                 .stroke(.green, lineWidth: 1)
         )
     }
+    
+    // Filtrere favoritter basert på søketekst
+    var filteredFavoriteContacts: [Contact] {
+        return contacts.filter { contact in
+            contact.isFavorite &&
+            (searchedText.isEmpty || contact.name.lowercased().contains(searchedText.lowercased()))
+        }
+    }
 }
+
+
+/*
+import SwiftUI
+
+struct FavoriteView: View {
+    
+    @Binding var contacts: [Contact]
+    @Binding var archivedContacts: [ArchivedContact]
+    var removeFromContacts: (Contact) -> Void // Funksjon for å flytte kontakt tilbake til kontaktene
+    var searchedText: String
+    
+    var body: some View {
+
+        ScrollView(.vertical) {
+            
+            VStack {
+                
+                ForEach(favoriteContacts, id: \.id) { contact in
+                    if let contactIndex = contacts.firstIndex(where: { $0.id == contact.id }) {
+                        ContactCell(contacts: $contacts, contact: $contacts[contactIndex], archivedContacts: $archivedContacts)
+
+                            .onTapGesture {
+                                removeFromContacts(contact) // Fjern fra favoritter og flytt tilbake til kontakter
+                            }
+                    }
+                }
+                .padding(.horizontal)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(5)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(.green, lineWidth: 1)
+        )
+    }
+    
+    // Hjelpe-funksjon for å filtrere favoritter
+    var favoriteContacts: [Contact] {
+        contacts.filter { $0.isFavorite }
+    }
+}
+*/

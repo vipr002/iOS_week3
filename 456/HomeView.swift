@@ -11,72 +11,68 @@ import SwiftUI
 struct HomeView: View {
     
     @State var contacts: [Contact] = mocks // Hovedlisten for kontakter
-    @State private var selectedContact: Contact?
+    @Binding var archivedContacts: [ArchivedContact]
     @State private var searchedText: String = ""
     
     var body: some View {
-        
         NavigationStack {
-            
             ScrollView {
-                
                 VStack(alignment: .leading, spacing: 20) {
                     
-                    // Favorittseksjon
-                    if !favoriteContacts.isEmpty {
+                    // Vis favorite contacts
+                    if !filteredFavoriteContacts.isEmpty {
                         Text("Favorites")
                             .font(.title)
                             .padding(.leading)
                         
-                        FavoriteView(contacts: $contacts, removeFromContacts: moveToContacts, searchedText: searchedText)
+                        
+                        FavoriteView(contacts: $contacts, archivedContacts: $archivedContacts, removeFromContacts: { contact in
+                            moveToContacts(contact: contact)
+                        }, searchedText: searchedText)
                     }
-                    
-                    // Kontaktseksjon
-                    if !nonFavoriteContacts.isEmpty {
+
+                    // Vise ikke-favoritter
+                    if !filteredNonFavoriteContacts.isEmpty {
                         Text("Contacts")
                             .font(.title)
                             .padding(.leading)
                         
-                        
-                        ContactView(contacts: $contacts, removeFromFavorites: moveToFavorites, searchedText: searchedText)
+
+                        ContactView(contacts: $contacts, archivedContacts: $archivedContacts, removeFromFavorites: { contact in
+                            moveToFavorites(contact: contact)
+                        }, searchedText: searchedText)
                     }
                 }
-                
                 .padding()
             }
         }
         .searchable(text: $searchedText)
     }
     
-    
-    // Søkefunksjon
-    func filteredContacts() -> [Contact] {
-        guard !searchedText.isEmpty else { return contacts }
+    // Filtrere favoritter basert på søketekst
+    var filteredFavoriteContacts: [Contact] {
         return contacts.filter { contact in
-            contact.name.lowercased().contains(searchedText.lowercased())
+            contact.isFavorite &&
+            (searchedText.isEmpty || contact.name.lowercased().contains(searchedText.lowercased()))
         }
     }
     
-    // ---- * Håndtering av favoritt og ikke-favoritt kontakter * ----
-    
-    // Beregnet variabel for favorittkontakter
-    var favoriteContacts: [Contact] {
-        return contacts.filter { $0.isFavorite }
+    // Filtrere ikke-favoritter basert på søketekst
+    var filteredNonFavoriteContacts: [Contact] {
+        return contacts.filter { contact in
+            !contact.isFavorite && !contact.isArchived &&
+            (searchedText.isEmpty || contact.name.lowercased().contains(searchedText.lowercased()))
+        }
     }
-    
-    // Beregnet variabel for ikke-favorittkontakter
-    var nonFavoriteContacts: [Contact] {
-        return contacts.filter { !$0.isFavorite }
-    }
-    
-    // Flytt kontakt til favorittlisten
+
+    // Flytte kontakt til favoritter
     func moveToFavorites(contact: Contact) {
         if let index = contacts.firstIndex(where: { $0.id == contact.id }) {
             contacts[index].isFavorite = true
         }
     }
     
-    // Flytt kontakt tilbake til kontaktlisten
+    // Flytte tilbake til kontakter
     func moveToContacts(contact: Contact) {
         if let index = contacts.firstIndex(where: { $0.id == contact.id }) {
             contacts[index].isFavorite = false
@@ -84,6 +80,14 @@ struct HomeView: View {
     }
 }
 
-#Preview {
-    HomeView()
-}
+
+/*
+
+ func filteredContacts(isFavorite: Bool) -> [Contact] {
+     if isFavorite {
+         return contacts.filter { $0.isFavorite }
+     } else {
+         return contacts.filter { !$0.isFavorite }
+     }
+ }
+ */

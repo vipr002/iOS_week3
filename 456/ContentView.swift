@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @State var contacts: [Contact] = mocks
+    @State var archivedContacts: [ArchivedContact] = []
     @State private var selectedContact: Contact? // Holder styr på den valgte kontakten
     @State private var isShowingDetails = false // Brukes for å kontrollere om sheet skal vises
     
@@ -18,15 +19,25 @@ struct ContentView: View {
         VStack {
             TabView {
                 
-                HomeView()
+                ArchivedList(archivedContacts: $archivedContacts, contacts: $contacts)
+                    .tabItem {
+                        Label("Archive", systemImage: "tray.fill")
+                    }
+                
+                HomeView(archivedContacts: $archivedContacts)
                 .tabItem {
                     Label("Contacts", systemImage: "person.fill")
                 }
+                
+                SettingsView()
+                    .tabItem {
+                        Label("Settings", systemImage: "gearshape.fill")
+                    }
             }
         }
     }
 }
 
-#Preview {
-    ContentView()
-}
+// TO DO:
+// x Gjenopprette fra arkivering
+// x Settingsside

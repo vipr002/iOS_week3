@@ -32,29 +32,7 @@ struct ContactDetailsView: View {
                         contact.isFavorite.toggle() // Toggler verdien av isFavorite
                     }
             }
-            
-            /*
-            // Viser arkiveringsdato hvis tilgjengelig
-            if let archivedAt = contact.archivedAt {
-                Text("Archived at: \(archivedAtFormatted)")
-                    .font(.caption)
-                    .padding(.top, 5)
-            }
-             */
         }
         .padding()
     }
-    
-    // Formaterer archivedAt som en lesbar dato
-    var archivedAtFormatted: String {
-        if let archivedAt = contact.archivedAt {
-            let formatter = DateFormatter()
-            formatter.dateStyle = .medium
-            formatter.timeStyle = .short
-            return formatter.string(from: archivedAt)
-        } else {
-            return "Not archived"
-        }
-    }
 }
-    
