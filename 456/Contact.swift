@@ -12,7 +12,7 @@ struct Contact: Identifiable {
     let id: UUID = UUID()
     let name: String
     let imageName: String
-    var isFavorite: Bool = false
+    var isFavorite: Bool 
     var isArchived: Bool = false
     var archivedAt: Date? = nil 
 }

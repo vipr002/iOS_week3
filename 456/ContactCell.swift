@@ -33,7 +33,7 @@ struct ContactCell: View {
                 .padding(10)
                 .foregroundColor(.red)
                 .onTapGesture {
-                    contact.isFavorite.toggle() // Oppdaterer favorittstatusen
+                    toggleFavorite()
                 }
         }
         
@@ -48,5 +48,17 @@ struct ContactCell: View {
                 .presentationDetents([.fraction(0.2)])
                 
         }
+    }
+    
+    func toggleFavorite() {
+        contact.isFavorite.toggle()
+        
+        // Oppdaterer hovedlisten med den nye favorittstatusen
+        if let index = contacts.firstIndex(where: { $0.id == contact.id }) {
+            contacts[index].isFavorite = contact.isFavorite
+        }
+        
+        // Lagre favorittstatusen i UserDefaults
+        UserDefaults.standard.set(contact.isFavorite, forKey: "\(contact.id)-isFavorite")
     }
 }

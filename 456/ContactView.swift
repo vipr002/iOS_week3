@@ -13,23 +13,26 @@ struct ContactView: View {
     var searchedText: String
     
     var body: some View {
-        ScrollView(.vertical) {
-            VStack {
-                // Filtreringslogikk direkte i contactview
-                ForEach(filteredContacts) { contact in
-                    if let contactIndex = contacts.firstIndex(where: { $0.id == contact.id }) {
-                        
-                        
-                        // Sende både kontakter og spesifikk kontakt som binding til contactcell
-                        ContactCell(contacts: $contacts, contact: $contacts[contactIndex], archivedContacts: $archivedContacts)
-                            .onTapGesture {
-                                removeFromFavorites(contact)
-                            }
+            
+            ScrollView(.vertical) {
+                
+                VStack {
+                    
+                    // Filtreringslogikk direkte i contactview
+                    ForEach(filteredContacts) { contact in
+                        if let contactIndex = contacts.firstIndex(where: { $0.id == contact.id }) {
+                            
+                            
+                            // Sende både kontakter og spesifikk kontakt som binding til contactcell
+                            ContactCell(contacts: $contacts, contact: $contacts[contactIndex], archivedContacts: $archivedContacts)
+                                .onTapGesture {
+                                    removeFromFavorites(contact)
+                                }
+                        }
                     }
                 }
             }
-        }
-        .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity)
     }
     
     // Viser vanlige kontakter

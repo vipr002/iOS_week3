@@ -9,28 +9,30 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @Binding var contacts: [Contact]
-    @State private var enableFavorites: Bool = true
-    @State private var displayAsGrid: Bool = UserDefaults.standard.bool(forKey: "displayAsGrid")
+        @Binding var contacts: [Contact]
+        @State private var enableFavorites: Bool = true
+        @State private var displayAsGrid: Bool = UserDefaults.standard.bool(forKey: "displayAsList")
     
     var body: some View {
         
         VStack {
             
-            // Toggle for enabling/disabling favorites
-            Toggle("Remove all Favorites", isOn: $enableFavorites)
-                .onChange(of: enableFavorites) { newValue in
+            Toggle("Favorites", isOn: $enableFavorites)
+                .onChange(of: enableFavorites) { oldValue, newValue in
                     if !newValue {
                         unfavoriteAllContacts()
                     }
                 }
                 .padding()
             
-            // grid/list toggle
-            Toggle("Display Contacts as List", isOn: .constant(true))
+
+            // https://www.hackingwithswift.com/books/ios-swiftui/storing-user-settings-with-userdefaults
+            Toggle("Display Favorites as Grid", isOn: $displayAsGrid)
+                .onChange(of: displayAsGrid) { oldValue, newValue in
+                    UserDefaults.standard.set(newValue, forKey: "displayAsList")
+                }
                 .padding()
-            
-        } // VStack
+        } 
         .padding(.vertical)
     }
     
@@ -43,6 +45,3 @@ struct SettingsView: View {
         }
     }
 }
-
-// TO DO: Toggle Between Displaying Favorite Contacts as a Grid or List (using UserDefaults)
-// https://www.hackingwithswift.com/books/ios-swiftui/storing-user-settings-with-userdefaults

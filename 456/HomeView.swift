@@ -13,10 +13,15 @@ struct HomeView: View {
     @Binding var contacts: [Contact]
     @Binding var archivedContacts: [ArchivedContact]
     @State private var searchedText: String = ""
+    @State private var displayAsGrid: Bool = UserDefaults.standard.bool(forKey: "displayAsList")
+        
     
     var body: some View {
+        
         NavigationStack {
+            
             ScrollView {
+                
                 VStack(alignment: .leading, spacing: 20) {
                     
                     // Vis favorite contacts
@@ -28,7 +33,7 @@ struct HomeView: View {
                         
                         FavoriteView(contacts: $contacts, archivedContacts: $archivedContacts, removeFromContacts: { contact in
                             moveToContacts(contact: contact)
-                        }, searchedText: searchedText)
+                        }, searchedText: searchedText, displayAsGrid: displayAsGrid)
                     }
 
                     // Vise ikke-favoritter

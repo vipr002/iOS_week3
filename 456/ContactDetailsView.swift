@@ -12,8 +12,11 @@ struct ContactDetailsView: View {
     @Binding var contact: Contact // Bruker binding for å kunne oppdatere kontaktens egenskaper
     
     var body: some View {
+        
         VStack(alignment: .leading) {
+            
             HStack {
+                
                 Image(contact.imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fill)

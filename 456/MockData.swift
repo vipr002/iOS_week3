@@ -11,22 +11,27 @@ let mocks = [
     
     Contact(
         name: "John Menu",
-        imageName: "man1"
+        imageName: "man1",
+        isFavorite: false
     ),
     Contact(
         name: "Donna ArrowUp",
-        imageName: "woman1"
+        imageName: "woman1",
+        isFavorite: false
     ),
     Contact(
         name: "Mike Racquet",
-        imageName: "man2"
+        imageName: "man2",
+        isFavorite: false
     ),
     Contact(
         name: "Tonny Badge",
-        imageName: "man3"
+        imageName: "man3",
+        isFavorite: false
     ),
     Contact(
         name: "Bobbie Tray",
-        imageName: "woman2"
+        imageName: "woman2",
+        isFavorite: false
     )
 ]

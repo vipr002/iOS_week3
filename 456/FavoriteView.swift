@@ -13,32 +13,50 @@ struct FavoriteView: View {
     @Binding var archivedContacts: [ArchivedContact]
     var removeFromContacts: (Contact) -> Void
     var searchedText: String
+    var displayAsGrid: Bool
     
     var body: some View {
-        ScrollView(.vertical) {
-            VStack {
-                
-                // Filtreringslogikk for favoritter direkte inn i favoriteview
+        
+        if displayAsGrid {
+            
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
                 ForEach(filteredFavoriteContacts, id: \.id) { contact in
                     if let contactIndex = contacts.firstIndex(where: { $0.id == contact.id }) {
-                       
-                        
-                        // Sende kontakter + spesifikk kontakt som binding til contactcell
                         ContactCell(contacts: $contacts, contact: $contacts[contactIndex], archivedContacts: $archivedContacts)
                             .onTapGesture {
                                 removeFromContacts(contact)
                             }
                     }
                 }
-                .padding(.horizontal)
             }
+        } else {
+            
+            ScrollView(.vertical) {
+                
+                VStack {
+                    
+                    // Filtreringslogikk for favoritter direkte inn i favoriteview
+                    ForEach(filteredFavoriteContacts, id: \.id) { contact in
+                        if let contactIndex = contacts.firstIndex(where: { $0.id == contact.id }) {
+                            
+                            
+                            // Sende kontakter + spesifikk kontakt som binding til contactcell
+                            ContactCell(contacts: $contacts, contact: $contacts[contactIndex], archivedContacts: $archivedContacts)
+                                .onTapGesture {
+                                    removeFromContacts(contact)
+                                }
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(5)
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(.green, lineWidth: 1)
+            )
         }
-        .frame(maxWidth: .infinity)
-        .padding(5)
-        .overlay(
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(.green, lineWidth: 1)
-        )
     }
     
     // Filtrere favoritter basert på søketekst

@@ -22,8 +22,10 @@ struct ArchivedList: View {
     var body: some View {
         
         List {
+            
             if archivedContacts.isEmpty {
                 Text("You have no archived contacts")
+                
             } else {
                 
                 ForEach($archivedContacts) { $archivedContact in

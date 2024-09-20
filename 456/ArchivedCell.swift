@@ -15,6 +15,7 @@ struct ArchivedCell: View {
     @Binding var archivedContact: ArchivedContact
 
     var body: some View {
+        
         VStack {
             
             HStack {
