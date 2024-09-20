@@ -40,4 +40,4 @@ struct ContentView: View {
 
 // TO DO:
 // x Gjenopprette fra arkivering
-// x Settingsside
+// x Settingsside (displaying as grid or list, using UserDefaults) 

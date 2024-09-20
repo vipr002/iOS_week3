@@ -11,6 +11,7 @@ struct SettingsView: View {
     
     @Binding var contacts: [Contact]
     @State private var enableFavorites: Bool = true
+    @State private var displayAsGrid: Bool = UserDefaults.standard.bool(forKey: "displayAsGrid")
     
     var body: some View {
         
@@ -43,4 +44,5 @@ struct SettingsView: View {
     }
 }
 
-// Toggle Between Displaying Favorite Contacts as a Grid or List
+// TO DO: Toggle Between Displaying Favorite Contacts as a Grid or List (using UserDefaults)
+// https://www.hackingwithswift.com/books/ios-swiftui/storing-user-settings-with-userdefaults
