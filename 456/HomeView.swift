@@ -14,6 +14,7 @@ struct HomeView: View {
     @Binding var archivedContacts: [ArchivedContact]
     @State private var searchedText: String = ""
     @State private var displayAsGrid: Bool = UserDefaults.standard.bool(forKey: "displayAsList")
+    @State private var showSheet = false
     
     
     var body: some View {
@@ -25,7 +26,7 @@ struct HomeView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     
                     Button(action: {
-                        print("New contact tapped")
+                        showSheet.toggle()
                     },
                            label: {
                         Image(systemName: "plus.circle.fill")
@@ -61,6 +62,10 @@ struct HomeView: View {
                     }
                 }
                 .padding()
+                .sheet(isPresented: $showSheet) {
+                    ModifierView()
+                        .presentationDetents([.fraction(0.4)])
+                }
             }
         }
         .searchable(text: $searchedText)

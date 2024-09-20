@@ -53,6 +53,3 @@ struct ContentView: View {
         }
     }
 }
-
-// TO DO:
-// Persist the favorite status, such that relaunching the application doesn’t modify the app data.
