@@ -10,7 +10,7 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @State var contacts: [Contact] = mocks // Hovedlisten for kontakter
+    @Binding var contacts: [Contact]
     @Binding var archivedContacts: [ArchivedContact]
     @State private var searchedText: String = ""
     

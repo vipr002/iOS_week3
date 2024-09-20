@@ -15,12 +15,12 @@ struct SettingsView: View {
     var body: some View {
         
         VStack {
-        
+            
             // Toggle for enabling/disabling favorites
-            Toggle("Enable Favorites", isOn: $enableFavorites)
+            Toggle("Remove all Favorites", isOn: $enableFavorites)
                 .onChange(of: enableFavorites) { newValue in
                     if !newValue {
-                       // unfavoriteAllContacts()
+                        unfavoriteAllContacts()
                     }
                 }
                 .padding()
@@ -33,23 +33,14 @@ struct SettingsView: View {
         .padding(.vertical)
     }
     
-    /* Fjerne alle favoritter
+    // Fjerne alle favoritter
     func unfavoriteAllContacts() {
         for index in contacts.indices {
-            contacts[index].isFavorite = false
+            if contacts[index].isFavorite {
+                contacts[index].isFavorite = false
+            }
         }
-    }*/
+    }
 }
 
-#Preview {
-    SettingsView(contacts: .constant(mocks))
-}
-
-
-#Preview {
-    SettingsView(contacts: .constant(mocks)) 
-}
-
-
-// Remove the Favorite Status of All Contacts
 // Toggle Between Displaying Favorite Contacts as a Grid or List

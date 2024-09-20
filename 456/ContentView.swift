@@ -24,7 +24,7 @@ struct ContentView: View {
                         Label("Archive", systemImage: "tray.fill")
                     }
                 
-                HomeView(archivedContacts: $archivedContacts)
+                HomeView(contacts: $contacts, archivedContacts: $archivedContacts)
                 .tabItem {
                     Label("Contacts", systemImage: "person.fill")
                 }
