@@ -9,28 +9,23 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var contacts: [Contact] = mocks
+    @State var contacts: [Contact] = []
     @State var archivedContacts: [ArchivedContact] = []
     @State private var selectedContact: Contact? // Holder styr på den valgte kontakten
     @State private var isShowingDetails = false // Brukes for å kontrollere om sheet skal vises
     
   
-    func loadContacts() -> [Contact] {
-        var contacts = mocks
-
-        // Gå gjennom alle kontaktene og oppdater isFavorite basert på lagrede verdier
+    func loadContacts() {
+        contacts = mocks
+        
+        // Oppdater favorittstatus fra UserDefaults
         for index in contacts.indices {
             let contactID = contacts[index].id
-            // Hent lagret isFavorite-verdi fra UserDefaults
-            if UserDefaults.standard.object(forKey: "\(contactID)-isFavorite") != nil {
-                contacts[index].isFavorite = UserDefaults.standard.bool(forKey: "\(contactID)-isFavorite")
+            if let savedFavoriteStatus = UserDefaults.standard.object(forKey: "\(contactID)-isFavorite") as? Bool {
+                contacts[index].isFavorite = savedFavoriteStatus
             }
         }
-        
-        return contacts
     }
-
-
     
     var body: some View {
         
@@ -55,7 +50,7 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            contacts = loadContacts()
+            loadContacts()
         }
     }
 }

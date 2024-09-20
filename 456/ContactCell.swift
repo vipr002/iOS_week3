@@ -53,12 +53,12 @@ struct ContactCell: View {
     func toggleFavorite() {
         contact.isFavorite.toggle()
         
-        // Oppdaterer hovedlisten med den nye favorittstatusen
+        // Oppdaterer hovedlisten med nye favorittstatusen
         if let index = contacts.firstIndex(where: { $0.id == contact.id }) {
             contacts[index].isFavorite = contact.isFavorite
         }
         
-        // Lagre favorittstatusen i UserDefaults
+        // Lagre favorittstatus i UserDefaults med UUID
         UserDefaults.standard.set(contact.isFavorite, forKey: "\(contact.id)-isFavorite")
     }
 }
