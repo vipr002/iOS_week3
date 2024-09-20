@@ -14,7 +14,7 @@ struct HomeView: View {
     @Binding var archivedContacts: [ArchivedContact]
     @State private var searchedText: String = ""
     @State private var displayAsGrid: Bool = UserDefaults.standard.bool(forKey: "displayAsList")
-        
+    
     
     var body: some View {
         
@@ -23,6 +23,18 @@ struct HomeView: View {
             ScrollView {
                 
                 VStack(alignment: .leading, spacing: 20) {
+                    
+                    Button(action: {
+                        print("New contact tapped")
+                    },
+                           label: {
+                        Image(systemName: "plus.circle.fill")
+                        Text("New Contact")
+                    })
+                    .padding(8)
+                    .background(Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(15)
                     
                     // Vis favorite contacts
                     if !filteredFavoriteContacts.isEmpty {
@@ -35,14 +47,14 @@ struct HomeView: View {
                             moveToContacts(contact: contact)
                         }, searchedText: searchedText, displayAsGrid: displayAsGrid)
                     }
-
+                    
                     // Vise ikke-favoritter
                     if !filteredNonFavoriteContacts.isEmpty {
                         Text("Contacts")
                             .font(.title)
                             .padding(.leading)
                         
-
+                        
                         ContactView(contacts: $contacts, archivedContacts: $archivedContacts, removeFromFavorites: { contact in
                             moveToFavorites(contact: contact)
                         }, searchedText: searchedText)
@@ -69,7 +81,7 @@ struct HomeView: View {
             (searchedText.isEmpty || contact.name.lowercased().contains(searchedText.lowercased()))
         }
     }
-
+    
     // Flytte kontakt til favoritter
     func moveToFavorites(contact: Contact) {
         if let index = contacts.firstIndex(where: { $0.id == contact.id }) {
@@ -84,7 +96,6 @@ struct HomeView: View {
         }
     }
 }
-
 
 /*
 
