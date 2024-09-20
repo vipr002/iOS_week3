@@ -18,12 +18,11 @@ struct ContentView: View {
     func loadContacts() {
         contacts = mocks
         
-        // Oppdater favorittstatus fra UserDefaults
+        // Oppdatere favorittstatus fra UserDefaults
         for index in contacts.indices {
             let contactID = contacts[index].id
-            if let savedFavoriteStatus = UserDefaults.standard.object(forKey: "\(contactID)-isFavorite") as? Bool {
-                contacts[index].isFavorite = savedFavoriteStatus
-            }
+            // Henter favorittstatus direkte
+            contacts[index].isFavorite = UserDefaults.standard.bool(forKey: "\(contactID)-isFavorite")
         }
     }
     
