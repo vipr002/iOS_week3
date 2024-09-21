@@ -9,12 +9,13 @@ import Foundation
 import SwiftUI
 
 struct Contact: Identifiable {
-    let id: UUID 
-    let name: String
-    let imageName: String
-    var isFavorite: Bool 
+    let id: UUID
+    var name: String
+    var phoneNumber: String?
+    var imageName: String?
+    var isFavorite: Bool
     var isArchived: Bool = false
-    var archivedAt: Date? = nil 
+    var archivedAt: Date? = nil
 }
 
 

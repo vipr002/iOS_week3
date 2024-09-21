@@ -19,11 +19,12 @@ struct ArchivedCell: View {
         VStack {
             
             HStack {
-                Image(contact.imageName)
+                Image(contact.imageName ?? "defaultImage")  // Bruk en standard "defaultImage" hvis imageName er nil
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 50, height: 50)
                     .clipShape(Circle())
+
                 Text(contact.name)
             }
             

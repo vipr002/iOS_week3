@@ -19,7 +19,7 @@ struct ContactDetailCell: View {
             
             HStack {
                 
-                Image(contact.imageName)
+                Image(contact.imageName ?? "defaultImage")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 50, height: 50)

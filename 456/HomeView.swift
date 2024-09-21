@@ -62,9 +62,14 @@ struct HomeView: View {
                     }
                 }
                 .padding()
+
                 .sheet(isPresented: $showSheet) {
-                    ModifierView()
-                        .presentationDetents([.fraction(0.4)])
+                    ModifierView(onSave: { newContact in
+                        // Legg den nye kontakten til i kontaktlisten
+                        contacts.append(newContact)
+                        showSheet = false // Lukk sheet når kontakten er lagret
+                    })
+                    .presentationDetents([.fraction(0.4)])
                 }
             }
         }

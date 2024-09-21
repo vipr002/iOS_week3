@@ -12,6 +12,8 @@ struct ModifierView: View {
     @State private var name: String = ""
     @State private var number: String = ""
     
+    var onSave: (Contact) -> Void
+    
     var body: some View {
         
         VStack {
@@ -19,20 +21,43 @@ struct ModifierView: View {
             Spacer()
             
             Text("Create new Contact")
+                .font(.headline)
+                .padding(20)
             
             Form {
-                TextField(text: $name, prompt: Text("Name")) {
-                    Text("Name")
-                }
-                TextField(text: $number, prompt: Text("Number")) {
-                    Text("Number")
+                    Text("Name:")
+                    TextField(text: $name, prompt: Text("Aquired")) {
+                        Text("Name")
+                    }
+                    Text("Number:")
+                    TextField(text: $number, prompt: Text("Aquired")) {
+                        Text("Number")
                 }
             }
             .textFieldStyle(.roundedBorder)
+            
+            Spacer()
+            
+            Button(action: {
+                // Opprette en ny kontakt og sende den tilbake via closure
+                let newContact = Contact(
+                    id: UUID(),
+                    name: name,
+                    phoneNumber: number,
+                    imageName: nil,
+                    isFavorite: false
+                )
+                onSave(newContact)  // Kalle closure for å sende kontakt tilbake
+            },
+            label: {
+                Text("Save")
+            })
+            .padding(8)
+            .background(Color.green)
+            .foregroundColor(.white)
+            .cornerRadius(15)
         }
+        
+            Spacer()
     }
-}
-
-#Preview {
-    ModifierView()
 }
