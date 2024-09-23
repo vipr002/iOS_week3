@@ -11,7 +11,7 @@ import SwiftUI
 
 struct ArchivedCell: View {
 
-    var contact: Contact
+    @Binding var contact: Contact
     @Binding var archivedContact: ArchivedContact
 
     var body: some View {
@@ -19,11 +19,8 @@ struct ArchivedCell: View {
         VStack {
             
             HStack {
-                Image(contact.imageName ?? "defaultImage")  // Bruk en standard "defaultImage" hvis imageName er nil
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 50, height: 50)
-                    .clipShape(Circle())
+                
+                ProfileImageView(contact: $contact)
 
                 Text(contact.name)
             }

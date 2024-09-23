@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-struct ArchivedContact: Identifiable {
-    var id: UUID { contact.id }  // contact.id som identifikator
-    let contact: Contact
-    let archivedAt: Date
-}
 
 struct ArchivedList: View {
     
@@ -29,7 +24,7 @@ struct ArchivedList: View {
             } else {
                 
                 ForEach($archivedContacts) { $archivedContact in
-                    ArchivedCell(contact: archivedContact.contact, archivedContact: $archivedContact)
+                    ArchivedCell(contact: $archivedContact.contact, archivedContact: $archivedContact)
                     
                         .swipeActions(allowsFullSwipe: false) {
                             Button("Restore") {

@@ -26,6 +26,8 @@
 		0D4226092C9AFB3A00242926 /* ArchivedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4226082C9AFB3A00242926 /* ArchivedList.swift */; };
 		0D42260B2C9AFB5000242926 /* ArchivedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D42260A2C9AFB5000242926 /* ArchivedCell.swift */; };
 		0D42260D2C9E095200242926 /* ModifierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D42260C2C9E095200242926 /* ModifierView.swift */; };
+		0D42260F2C9F638800242926 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D42260E2C9F638700242926 /* ProfileImageView.swift */; };
+		0D4226112CA05C7C00242926 /* ContactsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4226102CA05C7C00242926 /* ContactsRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +70,8 @@
 		0D4226082C9AFB3A00242926 /* ArchivedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedList.swift; sourceTree = "<group>"; };
 		0D42260A2C9AFB5000242926 /* ArchivedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedCell.swift; sourceTree = "<group>"; };
 		0D42260C2C9E095200242926 /* ModifierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifierView.swift; sourceTree = "<group>"; };
+		0D42260E2C9F638700242926 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		0D4226102CA05C7C00242926 /* ContactsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				0D4225B92C9464FC00242926 /* _56App.swift */,
+				0D4226102CA05C7C00242926 /* ContactsRepository.swift */,
 				0D42260A2C9AFB5000242926 /* ArchivedCell.swift */,
 				0D4226082C9AFB3A00242926 /* ArchivedList.swift */,
 				0D4225E72C9469CE00242926 /* MockData.swift */,
@@ -134,6 +139,7 @@
 				0D4225F32C971A6600242926 /* ContactDetailCell.swift */,
 				0D4225F92C99BAC600242926 /* SettingsView.swift */,
 				0D42260C2C9E095200242926 /* ModifierView.swift */,
+				0D42260E2C9F638700242926 /* ProfileImageView.swift */,
 			);
 			path = 456;
 			sourceTree = "<group>";
@@ -295,6 +301,7 @@
 			files = (
 				0D4225F22C962B5E00242926 /* HomeView.swift in Sources */,
 				0D4225F02C9622E600242926 /* FavoriteView.swift in Sources */,
+				0D4226112CA05C7C00242926 /* ContactsRepository.swift in Sources */,
 				0D4225E62C94683D00242926 /* ContactCell.swift in Sources */,
 				0D4225F42C971A6600242926 /* ContactDetailCell.swift in Sources */,
 				0D4225E42C94654000242926 /* Contact.swift in Sources */,
@@ -305,6 +312,7 @@
 				0D4225EC2C961AF900242926 /* ContactDetailsView.swift in Sources */,
 				0D4225E82C9469CE00242926 /* MockData.swift in Sources */,
 				0D4225FA2C99BAC600242926 /* SettingsView.swift in Sources */,
+				0D42260F2C9F638800242926 /* ProfileImageView.swift in Sources */,
 				0D4226092C9AFB3A00242926 /* ArchivedList.swift in Sources */,
 				0D42260D2C9E095200242926 /* ModifierView.swift in Sources */,
 			);

@@ -12,6 +12,7 @@ struct ContactDetailCell: View {
     @Binding var contact: Contact
     @Binding var contacts: [Contact]
     @Binding var archivedContacts: [ArchivedContact]
+    let contactsRepository = ContactsRepository()
     
     var body: some View {
         
@@ -19,24 +20,20 @@ struct ContactDetailCell: View {
             
             HStack {
                 
-                Image(contact.imageName ?? "defaultImage")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 50, height: 50)
-                    .clipShape(Circle())
-                    .padding(.leading, 20)
-                    .padding(.trailing, 10)
-                
+                ProfileImageView(contact: $contact)
+
                 Text(contact.name)
                     .font(.headline)
                 Spacer()
                 
-                // Hjerteikonet som kan toggles for å oppdatere isFavorite
+                // Hjerteikonet for å oppdatere isFavorite
                 Image(systemName: contact.isFavorite ? "heart.fill" : "heart")
                     .padding(10)
                     .foregroundColor(.red)
                     .onTapGesture {
-                        contact.isFavorite.toggle() // Oppdaterer favorittstatusen
+                        contact.isFavorite.toggle()  // Oppdaterer favorittstatusen
+                        contactsRepository.saveContacts(contacts)  // Lagre kontaktene etter endring
+                        print("Updated favorite status to: \(contact.isFavorite)")
                     }
                     .padding(.trailing, 20)
             }
@@ -54,7 +51,7 @@ struct ContactDetailCell: View {
                 
                 Spacer()
                 
-                // --- Call button
+                // --- Call button ----
                 
                 Button(action: {
                     print("Phone button tapped")
@@ -70,7 +67,7 @@ struct ContactDetailCell: View {
                 
                 Spacer()
                 
-                // --- Message button
+                // --- Message button ----
                 
                 Button(action: {
                     print("Message button tapped")
@@ -86,11 +83,13 @@ struct ContactDetailCell: View {
                 
                 Spacer()
                                 
-                // --- Archive button
+                // --- Archive button ----
                 
                 Button(action: {
                     archiveContact(contact: &contact) // Arkiver contact
                     archive(contact) // Fjern fra contacts og legg til i arkiv
+                    contactsRepository.saveContacts(contacts)
+                    contactsRepository.saveArchivedContacts(archivedContacts)
                 }) {
                     Text("Archive")
                         .foregroundColor(.blue)
@@ -108,10 +107,6 @@ struct ContactDetailCell: View {
         .padding(5)
         .padding(.bottom)
         
-        // ramme rundt
-        /*.overlay(
-            RoundedRectangle(cornerRadius: 15)
-        ) */
     }
     
     // ---- Arkiver contact

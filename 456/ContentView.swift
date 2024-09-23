@@ -14,17 +14,6 @@ struct ContentView: View {
     @State private var selectedContact: Contact? // Holder styr på den valgte kontakten
     @State private var isShowingDetails = false // Brukes for å kontrollere om sheet skal vises
     
-  
-    func loadContacts() {
-        contacts = mocks
-        
-        // Oppdatere favorittstatus fra UserDefaults
-        for index in contacts.indices {
-            let contactID = contacts[index].id
-            // Henter favorittstatus direkte
-            contacts[index].isFavorite = UserDefaults.standard.bool(forKey: "\(contactID)-isFavorite")
-        }
-    }
     
     var body: some View {
         
@@ -47,9 +36,6 @@ struct ContentView: View {
                         Label("Settings", systemImage: "gearshape.fill")
                     }
             }
-        }
-        .onAppear {
-            loadContacts()
         }
     }
 }

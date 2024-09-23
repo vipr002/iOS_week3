@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ContactDetailsView: View {
     
-    @Binding var contact: Contact // Bruker binding for å kunne oppdatere kontaktens egenskaper
+    @Binding var contact: Contact
+    var toggleFavorite: () -> Void
     
     var body: some View {
         
@@ -17,23 +18,18 @@ struct ContactDetailsView: View {
             
             HStack {
                 
-                Image(contact.imageName ?? "defaultImage")  // Bruk en standard "defaultImage" hvis imageName er nil
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 50, height: 50)
-                    .clipShape(Circle())
-
+                ProfileImageView(contact: $contact)
                 
                 Text(contact.name)
                     .font(.headline)
                 Spacer()
                 
-                // Hjerteikonet som kan toggles for å oppdatere isFavorite
+                // ---- Hjerteikonet ----
                 Image(systemName: contact.isFavorite ? "heart.fill" : "heart")
                     .padding(10)
                     .foregroundColor(.red)
                     .onTapGesture {
-                        contact.isFavorite.toggle() // Toggler verdien av isFavorite
+                        toggleFavorite()
                     }
             }
         }
