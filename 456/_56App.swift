@@ -16,6 +16,3 @@ struct _56App: App {
         }
     }
 }
-
-// TO DO:
-//Upon adding a new contact, it should be persisted. You can introduce a ContactsRepository to do so, which would be informed after any modification to the contact list, to save it to storage.

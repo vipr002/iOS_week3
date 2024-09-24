@@ -19,7 +19,7 @@ struct FavoriteView: View {
         
         if displayAsGrid {
             
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                 ForEach(filteredFavoriteContacts, id: \.id) { contact in
                     if let contactIndex = contacts.firstIndex(where: { $0.id == contact.id }) {
                         ContactCell(contacts: $contacts, contact: $contacts[contactIndex], archivedContacts: $archivedContacts)

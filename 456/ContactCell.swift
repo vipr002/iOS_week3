@@ -21,7 +21,7 @@ struct ContactCell: View {
             ProfileImageView(contact: $contact)
 
             Text(contact.name)
-                .font(.headline)
+          //      .font(.headline)
             Spacer()
             
             

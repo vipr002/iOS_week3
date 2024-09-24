@@ -14,6 +14,8 @@ struct ContentView: View {
     @State private var selectedContact: Contact? // Holder styr på den valgte kontakten
     @State private var isShowingDetails = false // Brukes for å kontrollere om sheet skal vises
     
+    private let contactsRepository = ContactsRepository()
+    
     
     var body: some View {
         
@@ -21,15 +23,15 @@ struct ContentView: View {
             
             TabView {
                 
-                ArchivedList(archivedContacts: $archivedContacts, contacts: $contacts)
-                    .tabItem {
-                        Label("Archive", systemImage: "tray.fill")
-                    }
-                
                 HomeView(contacts: $contacts, archivedContacts: $archivedContacts)
                 .tabItem {
                     Label("Contacts", systemImage: "person.fill")
                 }
+                
+                ArchivedList(archivedContacts: $archivedContacts, contacts: $contacts)
+                    .tabItem {
+                        Label("Archive", systemImage: "tray.fill")
+                    }
                 
                 SettingsView(contacts: $contacts)
                     .tabItem {
@@ -37,5 +39,17 @@ struct ContentView: View {
                     }
             }
         }
+        
+        .onAppear {
+            
+            Task {
+                await loadData()
+                }
+        }
+    }
+    
+    func loadData() async {
+        contacts = await contactsRepository.loadContacts()
+        archivedContacts = await contactsRepository.loadArchivedContacts()
     }
 }

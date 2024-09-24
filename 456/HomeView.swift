@@ -74,22 +74,13 @@ struct HomeView: View {
                 }
             }
             .searchable(text: $searchedText)
-
-            .onAppear {
-                DispatchQueue.main.async {
-                    contacts = contactsRepository.loadContacts()
-                    archivedContacts = contactsRepository.loadArchivedContacts()
-                    // Logg kontaktene
-                    print("Loaded archived contacts: \(archivedContacts.map { $0.contact.name })")
-                }
-            }
         }
         
 
     func toggleFavorite(contact: Contact) {
         if let index = contacts.firstIndex(where: { $0.id == contact.id }) {
             contacts[index].isFavorite.toggle()
-            contactsRepository.saveContacts(contacts) 
+            contactsRepository.saveContacts(contacts)
         }
     }
         

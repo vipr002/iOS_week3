@@ -14,7 +14,7 @@ class ContactsRepository {
     
     
     // laste kontakter fra UserDefaults
-    func loadContacts() -> [Contact] {
+    func loadContacts() async -> [Contact] {
         if let data = UserDefaults.standard.data(forKey: contactsKey) {
             do {
                 let contacts = try JSONDecoder().decode([Contact].self, from: data)
@@ -29,7 +29,7 @@ class ContactsRepository {
         }
     }
     
-    func loadArchivedContacts() -> [ArchivedContact] {
+    func loadArchivedContacts() async -> [ArchivedContact] {
         if let data = UserDefaults.standard.data(forKey: archivedContactsKey) {
             do {
                 let archivedContacts = try JSONDecoder().decode([ArchivedContact].self, from: data)
@@ -49,9 +49,9 @@ class ContactsRepository {
         do {
             let data = try JSONEncoder().encode(contacts)
             UserDefaults.standard.set(data, forKey: contactsKey)
-            print("Contacts saved successfully.")
+            print("Contact saved.")
         } catch {
-            print("Error saving contacts: \(error)")
+            print("Error saving contact: \(error)")
         }
     }
     

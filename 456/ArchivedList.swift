@@ -14,6 +14,8 @@ struct ArchivedList: View {
     @Binding var contacts: [Contact]
     @State private var selectedContact: Contact?
     
+    private let contactsRepository = ContactsRepository()
+    
     var body: some View {
         
         List {
@@ -48,27 +50,27 @@ struct ArchivedList: View {
     
     private func restore(_ contact: Contact) {
         if let foundIndex = archivedContacts.firstIndex(where: { $0.contact.id == contact.id }) {
-            var restoredContact = archivedContacts[foundIndex].contact
-
-            // Fjerne arkivering
-            restoredContact.isArchived = false
-            restoredContact.archivedAt = nil
-            restoredContact.isFavorite = false
             
-            print("Restored contact isArchived: \(restoredContact.isArchived), isFavorite: \(restoredContact.isFavorite)")
+            archivedContacts[foundIndex].contact.isArchived = false
+            archivedContacts[foundIndex].contact.archivedAt = nil
+            archivedContacts[foundIndex].contact.isFavorite = false
 
-            // Legger restored contact tilbake til contactlist
-            if !contacts.contains(where: { $0.id == restoredContact.id }) {
-                contacts.append(restoredContact)
+            // Legger restored contact tilbake til contactlist hvis den ikke finnes fra før
+            if !contacts.contains(where: { $0.id == archivedContacts[foundIndex].contact.id }) {
+                contacts.append(archivedContacts[foundIndex].contact)
             } else {
-                print("Contact \(restoredContact.name) already exists in the contacts list.")
+                print("Contact \(archivedContacts[foundIndex].contact.name) already exists in the contacts list.")
             }
 
+            // Fjerner fra arkiverte kontakter
             archivedContacts.remove(at: foundIndex)
-            print("Restored contact: \(restoredContact.name)")
-            print("Contacts after restore: \(contacts.map { $0.name })")
+
+            // Lagrer både oppdatert contacts og archivedContacts
+            contactsRepository.saveContacts(contacts)
+            contactsRepository.saveArchivedContacts(archivedContacts)
         }
     }
+
 
     private func delete(_ contact: Contact) {
         if let foundIndex = archivedContacts.firstIndex(where: { $0.contact.id == contact.id }) {

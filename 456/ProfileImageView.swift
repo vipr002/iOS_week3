@@ -34,7 +34,6 @@ struct ProfileImageView: View {
                 .clipShape(Circle())
                 .padding(.leading, 20)
                 .padding(.trailing, 10)
-            
         }
     }
 }
